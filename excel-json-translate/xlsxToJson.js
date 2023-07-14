@@ -1,5 +1,5 @@
-var node_xj = require('xls-to-json');
-node_xj(
+const xlxToJson = require('xls-to-json');
+xlxToJson(
   {
     input: './d9.xlsx', // input xls
     output: './d9.json', // output json
