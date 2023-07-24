@@ -1,7 +1,14 @@
 /* 需要导出的JSON数据 */
 
-const XLSX = require("xlsx");
-const fs = require("fs");
+import XLSX from 'xlsx'
+import fs from 'fs'
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+
+
 // eg:
 var eg = [
   {
@@ -41,23 +48,60 @@ var eg = [
     Priority: "P0",
   },
 ];
-// 1.读取文件
-fs.readFile("./file/d9.json", "utf-8", (err, data) => {
-  if (err) {
-    throw err;
+
+export const translateDataToExcel = (_path, type) => {
+
+  if (!_path) {
+
+    const dirAbsolutePath = path.join(
+      __dirname,
+      './pending-files/js'
+    );
+
+    try {
+      const files = fs.readdirSync(dirAbsolutePath);
+
+
+
+      console.log(files);
+
+
+
+    }
+
+
+
+
+
   }
-  data = JSON.parse(data);
 
-  console.log("读取成功 - 文件数据>>>>>>>>>>>>>>>", data);
+  if (_path) {
+    // 1.读取文件
+    fs.readFile("./file/d9.json", "utf-8", (err, data) => {
+      if (err) {
+        throw err;
+      }
+      data = JSON.parse(data);
 
-  /* 2.创建worksheet */
-  var ws = XLSX.utils.json_to_sheet(data);
+      console.log("读取成功 - 文件数据>>>>>>>>>>>>>>>", data);
 
-  /* 3.新建空workbook，然后加入worksheet */
-  var wb = XLSX.utils.book_new();
+      /* 2.创建worksheet */
+      var ws = XLSX.utils.json_to_sheet(data);
 
-  XLSX.utils.book_append_sheet(wb, ws, "People");
+      /* 3.新建空workbook，然后加入worksheet */
+      var wb = XLSX.utils.book_new();
 
-  /* 生成xlsx文件 */
-  XLSX.writeFile(wb, "./xlsx/d9.xlsx");
-});
+      XLSX.utils.book_append_sheet(wb, ws, "People");
+
+      /* 生成xlsx文件 */
+      XLSX.writeFile(wb, "./xlsx/d9.xlsx");
+    });
+
+  }
+
+}
+
+translateDataToExcel()
+
+
+
