@@ -1,107 +1,116 @@
-/* 需要导出的JSON数据 */
-
-import XLSX from 'xlsx'
-import fs from 'fs'
+import XLSX from 'xlsx';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const dataToArray = (data, columnNames) => {
+  if (!data) return [];
 
+  if (!columnNames) return [];
 
-// eg:
-var eg = [
-  {
-    Field: "a2c_1d",
-    Name: "a2c pv L1D",
-    Rule: "between(value)~(value)",
-    Priority: "P0",
-  },
-  {
-    Field: "a2c_uv_1d",
-    Name: "a2c uv L1D",
-    Rule: "between(value)~(value)",
-    Priority: "P0",
-  },
-  {
-    Field: "search_a2c_gmv_L1D",
-    Name: "search a2c gmv L1D",
-    Rule: "between(value)~(value)",
-    Priority: "P0",
-  },
-  {
-    Field: "paid_gmv_1d",
-    Name: "item gmv L1D",
-    Rule: "between(value)~(value)",
-    Priority: "P0",
-  },
-  {
-    Field: "positive_seller_rating",
-    Name: "positive seller rating",
-    Rule: "between(0)~(100)",
-    Priority: "P0",
-  },
-  {
-    Field: "is_vchr_available",
-    Name: "If vourcher is avaliable or not",
-    Rule: "include：yes/no",
-    Priority: "P0",
-  },
-];
+  const _data = Object.keys(data)
+    ?.map((key) => {
+      if (!data.hasOwnProperty(key)) return null;
 
-export const translateDataToExcel = (_path, type) => {
+      return {
+        [columnNames.key]: key,
+        [columnNames.value]: data[key],
+      };
+    })
+    ?.filter(Boolean);
 
-  if (!_path) {
+  return _data || [];
+};
 
-    const dirAbsolutePath = path.join(
-      __dirname,
-      './pending-files/js'
-    );
+export const translateJsToExcel = async (config) => {
+  const { entryPath, outputPath } = config;
 
+  if (!(entryPath && outputPath)) {
     try {
+      const dirAbsolutePath = path.join(__dirname, './pending-files/js');
+
+      const outputDirAbsolutePath = path.join(__dirname, './output-files/js');
+
       const files = fs.readdirSync(dirAbsolutePath);
 
+      const fileName = files && files[0];
 
+      const filePath = path.join(dirAbsolutePath, fileName);
 
-      console.log(files);
+      // 1.读取文件
+      const fileDataModule = await import(filePath);
 
+      const fileData = fileDataModule?.default;
 
+      const excelFormatData = dataToArray(fileData, {
+        key: '变量名',
+        value: 'spmb key',
+      });
 
-    }
-
-
-
-
-
-  }
-
-  if (_path) {
-    // 1.读取文件
-    fs.readFile("./file/d9.json", "utf-8", (err, data) => {
-      if (err) {
-        throw err;
-      }
-      data = JSON.parse(data);
-
-      console.log("读取成功 - 文件数据>>>>>>>>>>>>>>>", data);
+      console.log('读取成功 - 文件数据>>>>>>>>>>>>>>>', excelFormatData);
 
       /* 2.创建worksheet */
-      var ws = XLSX.utils.json_to_sheet(data);
+      var ws = XLSX.utils.json_to_sheet(excelFormatData);
 
       /* 3.新建空workbook，然后加入worksheet */
       var wb = XLSX.utils.book_new();
 
-      XLSX.utils.book_append_sheet(wb, ws, "People");
+      XLSX.utils.book_append_sheet(wb, ws, 'sheet1');
 
-      /* 生成xlsx文件 */
-      XLSX.writeFile(wb, "./xlsx/d9.xlsx");
-    });
+      const outputFileAbsolutePath = `${outputDirAbsolutePath}/${fileName}.xlsx`;
 
+      /* 4.生成xlsx文件 */
+      XLSX.writeFile(wb, outputFileAbsolutePath);
+
+      return '输入文件路径:' + outputFileAbsolutePath;
+    } catch (err) {
+      console.error('Error >>>>>>>>>>>>>:', err);
+    }
   }
 
-}
+  try {
+    // 1.读取文件
+    const fileDataModule = await import(entryPath);
 
-translateDataToExcel()
+    const fileData = fileDataModule?.default;
 
+    const excelFormatData = dataToArray(fileData, {
+      key: '变量名',
+      value: 'spmb key',
+    });
 
+    console.log('读取成功 - 文件数据>>>>>>>>>>>>>>>', excelFormatData);
 
+    /* 2.创建worksheet */
+    var ws = XLSX.utils.json_to_sheet(excelFormatData);
+
+    /* 3.新建空workbook，然后加入worksheet */
+    var wb = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, 'sheet1');
+
+    const outputFileAbsolutePath = outputPath + '.xlsx';
+
+    /* 4.生成xlsx文件 */
+    XLSX.writeFile(wb, outputFileAbsolutePath);
+  } catch (err) {
+    console.error('Error >>>>>>>>>>>>>:', err);
+  }
+};
+
+const entryFileAbsolutePath = path.join(
+  __dirname,
+  './pending-files/js/spmb.js'
+);
+
+const outputFileAbsolutePath = path.join(
+  __dirname,
+  './output-files/js/spmb2.js'
+);
+
+translateJsToExcel({
+  entryPath: entryFileAbsolutePath,
+  outputPath: outputFileAbsolutePath,
+});
