@@ -25,9 +25,9 @@ const dataToArray = (data, columnNames) => {
 };
 
 export const translateJsToExcel = async (config) => {
-  const { entryPath, outputPath } = config;
+  const { entryPath, outputPath } = config || {};
 
-  if (!(entryPath && outputPath)) {
+  if (!entryPath || !outputPath) {
     try {
       const dirAbsolutePath = path.join(__dirname, './pending-files/js');
 
@@ -44,10 +44,18 @@ export const translateJsToExcel = async (config) => {
 
       const fileData = fileDataModule?.default;
 
-      const excelFormatData = dataToArray(fileData, {
-        key: '变量名',
-        value: 'spmb key',
-      });
+      let excelFormatData = []
+
+      if (!Array.isArray(fileData)) {
+        excelFormatData = dataToArray(fileData, {
+          key: '变量名',
+          value: 'spmb key',
+        });
+      }
+
+      if (Array.isArray(fileData)) {
+        excelFormatData = fileData
+      }
 
       console.log('读取成功 - 文件数据>>>>>>>>>>>>>>>', excelFormatData);
 
@@ -110,7 +118,4 @@ const outputFileAbsolutePath = path.join(
   './output-files/js/spmb2.js'
 );
 
-translateJsToExcel({
-  entryPath: entryFileAbsolutePath,
-  outputPath: outputFileAbsolutePath,
-});
+translateJsToExcel();
