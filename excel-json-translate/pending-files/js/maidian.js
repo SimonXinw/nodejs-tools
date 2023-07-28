@@ -1,46 +1,26 @@
 export default [
-  {
-      "页面名称": "Juno (Mercury) - SEARCH - Manage Strategy",
-      "url": "https://marvel.alibaba-inc.com/#/juno/search/manage-strategy"
-  },
-  {
-      "页面名称": "Juno (Mercury) - SEARCH - Add New Strategy",
-      "url": "https://marvel.alibaba-inc.com/#/juno/search/add-strategy"
-  },
-  {
-      "页面名称": "Juno (Mercury) - SEARCH - Configure Business",
-      "url": "https://marvel.alibaba-inc.com/#/juno/search/manage-business"
-  },
-  {
-      "页面名称": "Juno (Mercury) - SEARCH - Configure Layers",
-      "url": "https://marvel.alibaba-inc.com/#/juno/search/manage-layers"
-  },
-  {
-      "页面名称": "Juno (Mercury) - RECOMMENDATION - Manage Strategy",
-      "url": "https://marvel.alibaba-inc.com/#/juno/recommendation/manage-strategy"
-  },
-  {
-      "页面名称": "Juno (Mercury) - RECOMMENDATION - Add New Strategy",
-      "url": "https://marvel.alibaba-inc.com/#/juno/recommendation/add-strategy"
-  },
-  {
-      "页面名称": "Juno (Mercury) - RECOMMENDATION - Configure Business",
-      "url": "https://marvel.alibaba-inc.com/#/juno/recommendation/manage-business"
-  },
-  {
-      "页面名称": "Juno (Mercury) - RECOMMENDATION - Configure Layers",
-      "url": "https://marvel.alibaba-inc.com/#/juno/recommendation/manage-layers"
-  },
-  {
-      "页面名称": "Juno (Mercury) - COMMON - Manage Strategy",
-      "url": "https://marvel.alibaba-inc.com/#/juno/common/manage"
-  },
-  {
-      "页面名称": "Juno (Mercury) - COMMON - Add New Strategy",
-      "url": "https://marvel.alibaba-inc.com/#/juno/common/create"
-  },
-  {
-      "页面名称": "Juno (Mercury) - COMMON - Configure Business",
-      "url": "https://marvel.alibaba-inc.com/#/juno/common/business"
-  }
-];
+    {
+        "页面名称": "Vesta (Insignt) - BY CHANNEL - Search Programs Insight",
+        "url": "https://pre-marvel.alibaba-inc.com/#/seed/channel/search"
+    },
+    {
+        "页面名称": "Vesta (Insignt) - BY CHANNEL - HPJFY Programs Insight",
+        "url": "https://pre-marvel.alibaba-inc.com/#/seed/channel/hpjfy"
+    },
+    {
+        "页面名称": "Vesta (Insignt) - BY PROGRAM - ELP Insight",
+        "url": "https://pre-marvel.alibaba-inc.com/#/seed/program/elp"
+    },
+    {
+        "页面名称": "Vesta (Insignt) - BY PROGRAM - New Items Insight",
+        "url": "https://pre-marvel.alibaba-inc.com/#/seed/program/new-items"
+    },
+    {
+        "页面名称": "Vesta (Insignt) - BY PROGRAM - ASC HC 2.0 Insight",
+        "url": "https://pre-marvel.alibaba-inc.com/#/seed/program/asc-hc"
+    },
+    {
+        "页面名称": "Vesta (Insignt) - BY PROGRAM - Balm Insight",
+        "url": "https://pre-marvel.alibaba-inc.com/#/seed/program/balm"
+    }
+]
