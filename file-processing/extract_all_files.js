@@ -30,7 +30,9 @@ function traverseFolder(config) {
 
       // 移动文件
       const newFilePath = path.join(destinationFolder, file);
-      fs.renameSync(filePath, newFilePath);
+
+      fs.copyFileSync(filePath, newFilePath);
+
       console.log(`Moved ${filePath} to ${newFilePath}`);
     }
   });
