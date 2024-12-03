@@ -1,5 +1,5 @@
 {
-  "name": "excel-script",
+  "name": "nodejs-tools",
   "version": "1.0.0",
   "description": "",
   "main": "jsonToXlsx.js",
