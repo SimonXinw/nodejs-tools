@@ -1,0 +1,51 @@
+{
+  "continent": {
+    "code": "AS",
+    "geoname_id": 6255147,
+    "names": {
+      "ja": "アジア",
+      "pt-BR": "Ásia",
+      "ru": "Азия",
+      "zh-CN": "亚洲",
+      "de": "Asien",
+      "en": "Asia",
+      "es": "Asia",
+      "fr": "Asie"
+    }
+  },
+  "country": {
+    "iso_code": "HK",
+    "geoname_id": 1819730,
+    "names": {
+      "es": "Hong Kong",
+      "fr": "Hong Kong",
+      "ja": "香港",
+      "pt-BR": "Hong Kong",
+      "ru": "Гонконг",
+      "zh-CN": "香港",
+      "de": "Hongkong",
+      "en": "Hong Kong"
+    }
+  },
+  "maxmind": {
+    "queries_remaining": 249996
+  },
+  "registered_country": {
+    "iso_code": "HK",
+    "geoname_id": 1819730,
+    "names": {
+      "en": "Hong Kong",
+      "es": "Hong Kong",
+      "fr": "Hong Kong",
+      "ja": "香港",
+      "pt-BR": "Hong Kong",
+      "ru": "Гонконг",
+      "zh-CN": "香港",
+      "de": "Hongkong"
+    }
+  },
+  "traits": {
+    "ip_address": "2400:8a20:121:5::56",
+    "network": "2400:8a20:120::/43"
+  }
+}
