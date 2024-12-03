@@ -1,6 +1,6 @@
 // 替换为你的 MaxMind 账户 ID 和许可密钥
-const accountId = "1094661"; // 替换为实际的 account ID
-const licenseKey = ""; // 替换为实际的 license key
+const accountId = "xxxx"; // 替换为实际的 account ID
+const licenseKey = "xxxxx"; // 替换为实际的 license key
 
 // 替换为你要查询的 IP 地址
 const ipAddress = "181.215.229.164"; // 示例 IP 地址
