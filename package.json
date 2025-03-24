@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.7.8",
     "cheerio": "^1.0.0-rc.12",
+    "esbuild": "^0.25.1",
     "pretty": "^2.0.0",
     "puppeteer": "^20.9.0",
     "request": "^2.88.2",
