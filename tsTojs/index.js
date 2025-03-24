@@ -1,17 +1,27 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { build } from "esbuild";
 
+// 获取当前脚本所在目录，确保路径动态解析
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // 源文件和输出目录
-const srcDir = "./src";
-const outDir = "./output";
+const srcDir = path.join(__dirname, "src");
+const outDir = path.join(__dirname, "output");
 
 // 递归获取所有 .ts 文件
 async function getTsFiles(dir) {
-  const files = await fs.readdir(dir);
-  return files
-    .filter((file) => file.endsWith(".ts"))
-    .map((file) => path.join(dir, file));
+  try {
+    const files = await fs.readdir(dir);
+    return files
+      .filter((file) => file.endsWith(".ts"))
+      .map((file) => path.join(dir, file));
+  } catch (error) {
+    console.error(`❌ 读取目录失败: ${dir}`, error);
+    return [];
+  }
 }
 
 // 编译单个文件
@@ -24,11 +34,11 @@ async function compileTs(file) {
     outfile: outFile,
     bundle: false, // 每个文件单独编译
     format: "esm", // 生成 ES 模块
-    platform: "node",
+    platform: "browser", // 适用于浏览器
     target: "es6",
   });
 
-  console.log(`✔ Compiled: ${file} → ${outFile}`);
+  console.log(`✔ 编译成功: ${file} → ${outFile}`);
 }
 
 // 运行构建
@@ -38,7 +48,7 @@ async function main() {
     const tsFiles = await getTsFiles(srcDir);
 
     if (tsFiles.length === 0) {
-      console.log("No TypeScript files found.");
+      console.log("⚠️ 没有找到 TypeScript 文件。");
       return;
     }
 
@@ -46,9 +56,9 @@ async function main() {
       await compileTs(file);
     }
 
-    console.log("✅ All files compiled successfully!");
+    console.log("✅ 所有文件编译完成！");
   } catch (error) {
-    console.error("❌ Build failed:", error);
+    console.error("❌ 构建失败:", error);
   }
 }
 
