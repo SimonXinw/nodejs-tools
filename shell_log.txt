@@ -1,0 +1,17 @@
+2025-04-02 14:14:23 - 使用的仓库地址: https://github.com/chendianWeprotalk/showroom-ui.git
+2025-04-02 14:14:23 - === Script started ===
+2025-04-02 14:14:24 - Cloning repository: https://github.com/chendianWeprotalk/showroom-ui.git
+2025-04-02 14:14:24 - Executing: git clone https://github.com/chendianWeprotalk/showroom-ui.git
+2025-04-02 14:14:28 - SUCCESS: git clone https://github.com/chendianWeprotalk/showroom-ui.git
+2025-04-02 14:14:28 - Executing: cd showroom-ui
+2025-04-02 14:14:28 - SUCCESS: cd showroom-ui
+2025-04-02 14:14:28 - Executing: git checkout qa
+2025-04-02 14:14:29 - SUCCESS: git checkout qa
+2025-04-02 14:14:29 - Executing: git pull
+2025-04-02 14:14:31 - SUCCESS: git pull
+2025-04-02 14:14:32 - Executing: npm install
+2025-04-02 14:16:41 - SUCCESS: npm install
+2025-04-02 14:16:41 - Executing: npm run build
+2025-04-02 14:19:37 - SUCCESS: npm run build
+2025-04-02 14:19:37 - Copying dist to /c/Users/Lenovo/Desktop/projects/script-tools/nodejs-tools
+2025-04-02 14:19:38 - === Script completed successfully in 5m 14s ===
