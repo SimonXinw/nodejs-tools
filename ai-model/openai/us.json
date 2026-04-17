@@ -1,4 +1,22 @@
 {
-  "subTitle": "RGB triple-laser delivers 110% Rec.2020 gamut and true 3500 ISO lumen—keeping every frame accurate, bold, and vibrant, exactly as the director intended.",
-  "title": "Cinematic Picture, Exactly as Directed"
+  "content": {
+    "visionMasterMaxDark": {
+      "bigTitle": "So what defines a true home theater?",
+      "bottomLeftDescription": "Native Contrast",
+      "bottomLeftTitle": "5,000:1",
+      "bottomRightDescription": "Viewing Contrast",
+      "bottomRightTitle": "50,000:1",
+      "dark01DesktopUrl": "https://cdn.shopify.com/s/files/1/0668/4970/2037/files/dark01-desktop.jpg?v=1739501228",
+      "dark01MobileUrl": "https://cdn.shopify.com/s/files/1/0668/4970/2037/files/dark01-mobile.jpg?v=1739501227",
+      "dark02DesktopUrl": "https://cdn.shopify.com/s/files/1/0668/4970/2037/files/dark02-desktop.jpg?v=1739501229",
+      "dark02MobileUrl": "https://cdn.shopify.com/s/files/1/0668/4970/2037/files/dark02-mobile.jpg?v=1739501228",
+      "description": "See what others miss. VisionMaster banishes washed-out grays, revealing true\nblacks and flawless details with exceptional contrast—for uncompromising \ncinematic wonder.",
+      "descriptionMobile": "See what others miss. VisionMaster banishes washed-out grays, revealing true\nblacks and flawless details with exceptional contrast—for uncompromising \ncinematic wonder.",
+      "disclaimer": "*durchschnittliches Kontrastverhältnis auf dem Markt",
+      "spaceTop": "medium",
+      "title": "True Hollywood Black. No Compromise on Details.",
+      "value1": "1000:1",
+      "visible": true
+    }
+  }
 }

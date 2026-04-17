@@ -1,0 +1,190 @@
+{
+  "title": "nodejs-tools 能力目录",
+  "description": "仓库内可复用导出与常用脚本的入口说明；右侧为对应 README（Markdown）。",
+  "groups": [
+    {
+      "id": "common",
+      "label": "通用库"
+    },
+    {
+      "id": "openai",
+      "label": "OpenAI 模块（ai-model/openai）"
+    },
+    {
+      "id": "excel",
+      "label": "Excel / JSON（excel-json-translate）"
+    },
+    {
+      "id": "crawler",
+      "label": "爬虫与常量"
+    },
+    {
+      "id": "scripts",
+      "label": "可执行脚本（直接 node 运行）"
+    }
+  ],
+  "methods": [
+    {
+      "id": "create-logger",
+      "group": "common",
+      "name": "createLogger",
+      "file": "lib/logger.js",
+      "importPath": "lib/logger.js",
+      "summary": "创建带文件落盘与控制台的异步日志器，日志写入仓库根目录 logs/。",
+      "readmeSlug": "create-logger"
+    },
+    {
+      "id": "get-openai-api-key",
+      "group": "openai",
+      "name": "getOpenAiApiKey",
+      "file": "ai-model/openai/clients/openai.client.js",
+      "importPath": "ai-model/openai/index.js（再导出）",
+      "summary": "解析 OPENAI_API_KEY：优先环境变量，其次仓库根 .env。",
+      "readmeSlug": "get-openai-api-key"
+    },
+    {
+      "id": "openai-chat-completion",
+      "group": "openai",
+      "name": "openAiChatCompletion",
+      "file": "ai-model/openai/clients/openai.client.js",
+      "importPath": "ai-model/openai/index.js（再导出）",
+      "summary": "底层 Chat Completions HTTP 调用：重试、遥测、可选 json_object 响应格式。",
+      "readmeSlug": "openai-chat-completion"
+    },
+    {
+      "id": "openai-translate",
+      "group": "openai",
+      "name": "openAiTranslate",
+      "file": "ai-model/openai/clients/openai.client.js",
+      "importPath": "ai-model/openai/index.js（再导出）",
+      "summary": "system + user + 文本 的通用翻译/改写封装，内部调用 openAiChatCompletion。",
+      "readmeSlug": "openai-translate"
+    },
+    {
+      "id": "translate-to-japanese",
+      "group": "openai",
+      "name": "translateToJapanese",
+      "file": "ai-model/openai/services/japanese-translation.service.js",
+      "importPath": "ai-model/openai/index.js",
+      "summary": "单段英文 → 日语站点文案（ja-JP），使用内置本地化提示词。",
+      "readmeSlug": "translate-to-japanese"
+    },
+    {
+      "id": "translate-us-json-to-ja-json",
+      "group": "openai",
+      "name": "translateUsJsonToJaJson",
+      "file": "ai-model/openai/tasks/translate-us-to-ja-json.js",
+      "importPath": "ai-model/openai/index.js",
+      "summary": "读取 us.json，整段 JSON 英译日写入 ja.json，并写详细运行日志。",
+      "readmeSlug": "translate-us-json-to-ja-json"
+    },
+    {
+      "id": "openai-config",
+      "group": "openai",
+      "name": "OPENAI_* 配置常量",
+      "file": "ai-model/openai/config.js",
+      "importPath": "ai-model/openai/index.js（部分再导出）",
+      "summary": "模型枚举、默认温度与 max_tokens、官方 Chat URL 等集中配置。",
+      "readmeSlug": "openai-config"
+    },
+    {
+      "id": "japanese-translate-prompts",
+      "group": "openai",
+      "name": "JAPANESE_LOCALIZATION_*",
+      "file": "ai-model/openai/prompts/japanese-translate-prompt.js",
+      "importPath": "ai-model/openai/prompts/japanese-translate-prompt.js",
+      "summary": "日语本地化 system / user 提示词模板，供翻译服务拼接。",
+      "readmeSlug": "japanese-translate-prompts"
+    },
+    {
+      "id": "translate-js-to-excel",
+      "group": "excel",
+      "name": "translateJsToExcel",
+      "file": "excel-json-translate/jsonToXlsx.js",
+      "importPath": "excel-json-translate/jsonToXlsx.js",
+      "summary": "将 JS 模块默认导出的键值或数组转为 xlsx（pending-files 或自定义路径）。",
+      "readmeSlug": "translate-js-to-excel"
+    },
+    {
+      "id": "get-excel-js-data",
+      "group": "excel",
+      "name": "getExcelJsData",
+      "file": "excel-json-translate/handleXlsx.js",
+      "importPath": "excel-json-translate/handleXlsx.js",
+      "summary": "从本地 xlsx 读入 buffer 并解析为 JSON 行数组。",
+      "readmeSlug": "get-excel-js-data"
+    },
+    {
+      "id": "to-excel-file",
+      "group": "excel",
+      "name": "toExcelFile",
+      "file": "excel-json-translate/handleXlsx.js",
+      "importPath": "excel-json-translate/handleXlsx.js",
+      "summary": "将内存中的对象数组写入指定路径的 xlsx 文件。",
+      "readmeSlug": "to-excel-file"
+    },
+    {
+      "id": "http-crawler-const",
+      "group": "crawler",
+      "name": "COOKIES / COOKIES_ARR",
+      "file": "http-crawler/const.js",
+      "importPath": "http-crawler/const.js",
+      "summary": "爬虫使用的 Cookie 字符串与数组形式常量。",
+      "readmeSlug": "http-crawler-const"
+    },
+    {
+      "id": "script-tstjs",
+      "group": "scripts",
+      "name": "tsTojs 构建入口",
+      "file": "tsTojs/index.js",
+      "importPath": "（无导出，直接运行）",
+      "summary": "用 esbuild 将 tsTojs/src 下各 .ts 编译为 output 下独立 ESM .js。",
+      "readmeSlug": "script-tstjs"
+    },
+    {
+      "id": "script-json-translate",
+      "group": "scripts",
+      "name": "json-translate / translate",
+      "file": "json-translate/translate.js",
+      "importPath": "（无导出，直接运行）",
+      "summary": "读取 json 并转换结构后写回 output-file（示例为 cookies 形态）。",
+      "readmeSlug": "script-json-translate"
+    },
+    {
+      "id": "script-webhook-timer",
+      "group": "scripts",
+      "name": "定时 WebHook / deploy",
+      "file": "定时或监听 WebHook 事件执行脚本/timer.js",
+      "importPath": "（无导出，直接运行）",
+      "summary": "node-schedule 每分钟执行 deploy.sh 并追加日志。",
+      "readmeSlug": "script-webhook-timer"
+    },
+    {
+      "id": "script-maxmind-fetch",
+      "group": "scripts",
+      "name": "MaxMind GeoIP 示例",
+      "file": "maxmind/fetch.js",
+      "importPath": "（无导出，直接运行）",
+      "summary": "演示用账户调用 MaxMind GeoIP2 Country API。",
+      "readmeSlug": "script-maxmind-fetch"
+    },
+    {
+      "id": "script-extract-all-files",
+      "group": "scripts",
+      "name": "按扩展名批量复制文件",
+      "file": "file-processing/extract_all_files.js",
+      "importPath": "（无导出，直接运行）",
+      "summary": "交互式输入源目录、目标目录与后缀列表，递归复制匹配文件。",
+      "readmeSlug": "script-extract-all-files"
+    },
+    {
+      "id": "script-xlsx-to-json",
+      "group": "scripts",
+      "name": "xls-to-json 管线",
+      "file": "excel-json-translate/xlsxToJson.js",
+      "importPath": "（无导出，CommonJS require）",
+      "summary": "使用 xls-to-json 将指定 xls/xlsx 转为 json 文件。",
+      "readmeSlug": "script-xlsx-to-json"
+    }
+  ]
+}

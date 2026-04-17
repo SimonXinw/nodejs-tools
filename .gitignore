@@ -12,7 +12,10 @@
 
 # misc
 .DS_Store
+.env
 
+# task runtime logs (keep logs/.gitkeep if present)
+/logs/*.txt
 # umi
 .umi
 .umi-production

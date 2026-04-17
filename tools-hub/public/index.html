@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>nodejs-tools 文档中心</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0f1419;
+        --panel: #1a222c;
+        --border: #2a3544;
+        --text: #e7edf5;
+        --muted: #8b99a8;
+        --accent: #3d9cf5;
+        --accent-dim: rgba(61, 156, 245, 0.15);
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f4f6f9;
+          --panel: #ffffff;
+          --border: #d5dde6;
+          --text: #1c2430;
+          --muted: #5c6b7a;
+          --accent: #0b6bcb;
+          --accent-dim: rgba(11, 107, 203, 0.08);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      header h1 {
+        margin: 0 0 0.35rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        max-width: 52rem;
+        line-height: 1.45;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 340px) 1fr;
+        flex: 1;
+        min-height: 0;
+      }
+
+      @media (max-width: 880px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        nav {
+          max-height: 40vh;
+        }
+      }
+
+      nav {
+        border-right: 1px solid var(--border);
+        overflow: auto;
+        background: var(--panel);
+      }
+
+      .nav-inner {
+        padding: 0.75rem 0;
+      }
+
+      .group-label {
+        padding: 0.5rem 1rem 0.25rem;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+
+      button.method {
+        display: block;
+        width: 100%;
+        text-align: left;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        padding: 0.55rem 1rem;
+        font-size: 0.88rem;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+        line-height: 1.35;
+      }
+
+      button.method:hover {
+        background: var(--accent-dim);
+      }
+
+      button.method.active {
+        border-left-color: var(--accent);
+        background: var(--accent-dim);
+      }
+
+      button.method .path {
+        display: block;
+        font-size: 0.72rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+        word-break: break-all;
+      }
+
+      main {
+        overflow: auto;
+        padding: 1.25rem 1.5rem 2rem;
+      }
+
+      .detail-head {
+        margin-bottom: 1rem;
+      }
+
+      .detail-head h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.1rem;
+      }
+
+      .detail-meta {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .detail-meta code {
+        font-size: 0.78rem;
+        padding: 0.1rem 0.35rem;
+        border-radius: 4px;
+        background: var(--accent-dim);
+      }
+
+      #readme {
+        padding: 1rem 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      #readme h1,
+      #readme h2,
+      #readme h3 {
+        margin-top: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      #readme h1:first-child,
+      #readme h2:first-child {
+        margin-top: 0;
+      }
+
+      #readme pre {
+        overflow: auto;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+      }
+
+      #readme code {
+        font-family: ui-monospace, Consolas, monospace;
+        font-size: 0.84em;
+      }
+
+      #readme ul {
+        padding-left: 1.2rem;
+      }
+
+      .empty {
+        color: var(--muted);
+      }
+
+      .err {
+        color: #f87171;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="page-title">nodejs-tools 文档中心</h1>
+      <p id="page-desc">加载中…</p>
+    </header>
+    <div class="layout">
+      <nav aria-label="方法列表">
+        <div class="nav-inner" id="nav"></div>
+      </nav>
+      <main>
+        <div class="detail-head">
+          <h2 id="detail-title">请选择左侧条目</h2>
+          <div class="detail-meta" id="detail-meta"></div>
+        </div>
+        <article id="readme" class="empty">左侧选择一项以加载 README。</article>
+      </main>
+    </div>
+    <script>
+      const navEl = document.getElementById("nav");
+      const readmeEl = document.getElementById("readme");
+      const detailTitle = document.getElementById("detail-title");
+      const detailMeta = document.getElementById("detail-meta");
+      const pageTitle = document.getElementById("page-title");
+      const pageDesc = document.getElementById("page-desc");
+
+      let catalog = null;
+      let activeSlug = null;
+
+      const renderMarkdown = (md) => {
+        if (typeof marked !== "undefined" && marked.parse) {
+          return marked.parse(md);
+        }
+
+        const pre = document.createElement("pre");
+        pre.textContent = md;
+
+        return pre.outerHTML;
+      };
+
+      const setActive = (slug) => {
+        activeSlug = slug;
+        navEl.querySelectorAll("button.method").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.slug === slug);
+        });
+      };
+
+      const loadReadme = async (method) => {
+        detailTitle.textContent = method.name;
+        detailMeta.innerHTML =
+          "<div><strong>文件</strong>：<code>" +
+          method.file +
+          "</code></div>" +
+          "<div><strong>引入</strong>：<code>" +
+          method.importPath +
+          "</code></div>" +
+          "<div><strong>摘要</strong>：" +
+          method.summary +
+          "</div>";
+        readmeEl.className = "";
+        readmeEl.innerHTML = "<p class=\"empty\">加载 README…</p>";
+
+        try {
+          const res = await fetch("/api/readme/" + encodeURIComponent(method.readmeSlug));
+
+          if (!res.ok) {
+            readmeEl.innerHTML =
+              "<p class=\"err\">无法加载 README（HTTP " + res.status + "）。</p>";
+
+            return;
+          }
+
+          const text = await res.text();
+
+          readmeEl.innerHTML = renderMarkdown(text);
+        } catch (e) {
+          readmeEl.innerHTML =
+            "<p class=\"err\">网络错误：" + (e && e.message ? e.message : String(e)) + "</p>";
+        }
+      };
+
+      const buildNav = () => {
+        navEl.innerHTML = "";
+        const groups = new Map((catalog.groups || []).map((g) => [g.id, g.label]));
+
+        (catalog.methods || []).forEach((method) => {
+          let groupWrap = navEl.querySelector("[data-group=\"" + method.group + "\"]");
+
+          if (!groupWrap) {
+            groupWrap = document.createElement("div");
+            groupWrap.dataset.group = method.group;
+            const label = document.createElement("div");
+            label.className = "group-label";
+            label.textContent = groups.get(method.group) || method.group;
+            groupWrap.appendChild(label);
+            navEl.appendChild(groupWrap);
+          }
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "method";
+          btn.dataset.slug = method.readmeSlug;
+          btn.innerHTML =
+            "<span>" +
+            method.name +
+            "</span><span class=\"path\">" +
+            method.file +
+            "</span>";
+          btn.addEventListener("click", () => {
+            setActive(method.readmeSlug);
+            loadReadme(method);
+          });
+          groupWrap.appendChild(btn);
+        });
+      };
+
+      const boot = async () => {
+        try {
+          const res = await fetch("/api/catalog");
+          catalog = await res.json();
+        } catch {
+          pageDesc.textContent = "无法加载目录数据。";
+
+          return;
+        }
+
+        pageTitle.textContent = catalog.title || "nodejs-tools 文档中心";
+        pageDesc.textContent = catalog.description || "";
+        buildNav();
+
+        const first = (catalog.methods || [])[0];
+
+        if (first) {
+          setActive(first.readmeSlug);
+          loadReadme(first);
+        }
+      };
+
+      boot();
+    </script>
+  </body>
+</html>

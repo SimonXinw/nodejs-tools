@@ -19,8 +19,12 @@ function traverseFolder(config) {
     const stat = fs.statSync(filePath);
 
     if (stat.isDirectory()) {
-      // 如果是文件夹，则递归遍历
-      traverseFolder(filePath, destinationFolder);
+      traverseFolder({
+        ...config,
+        folderPath: filePath,
+      });
+
+      return;
     } else {
       // 如果是文件，则判断扩展名
       const extname = path.extname(filePath);
@@ -47,4 +51,8 @@ const extensionName = readlineSync.question(
   '请输入文件后缀名，多文件格式 .excel,.ppt ：'
 );
 
-traverseFolder({ sourceFolderPath, destinationFolderPath, extensionName });
+traverseFolder({
+  folderPath: sourceFolderPath,
+  destinationFolder: destinationFolderPath,
+  extensionName,
+});
