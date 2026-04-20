@@ -15,6 +15,15 @@ const OPENAI_HTTP_TIMEOUT_MS = 900_000;
 /** 大包或弱网下偶发断连，多试几次 */
 const OPENAI_REQUEST_MAX_ATTEMPTS = 6;
 
+/**
+ * gpt-5.x 等在 Chat Completions 中要求 `max_completion_tokens`，不接受 `max_tokens`。
+ *
+ * @param {string} model
+ * @returns {boolean}
+ */
+const openAiModelUsesMaxCompletionTokens = (model) =>
+  typeof model === "string" && model.startsWith("gpt-5");
+
 const parseDotEnvValue = (rawValue) => {
   const trimmedValue = rawValue.trim();
 
@@ -146,7 +155,11 @@ export const openAiChatCompletion = async ({
   };
 
   if (typeof maxOutputTokens === "number") {
-    body.max_tokens = maxOutputTokens;
+    if (openAiModelUsesMaxCompletionTokens(model)) {
+      body.max_completion_tokens = maxOutputTokens;
+    } else {
+      body.max_tokens = maxOutputTokens;
+    }
   }
 
   if (responseFormat) {

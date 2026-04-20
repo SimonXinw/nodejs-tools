@@ -22,7 +22,7 @@
  * | gpt-5.4-pro          | 30 / 180       | ~1.05M | 128,000    | 500       | 30,000    |
  * | gpt-5.4-2026-03-05   | 同 gpt-5.4     | 同左   | 同左       | 同左      | 同左      |
  *
- * 翻译默认模型与 max_tokens 上限见下方 `OPENAI_DEFAULT_TRANSLATION_MODEL` 与 `OPENAI_MAX_OUTPUT_TOKENS_GPT_4_1_FAMILY`。
+ * 翻译默认模型见 `OPENAI_DEFAULT_TRANSLATION_MODEL`；单请求 `max_tokens` 封顶见 `OPENAI_MAX_OUTPUT_TOKENS_GPT_4_1_FAMILY`（常量名沿用历史，数值与默认 5.4-mini 的官方上限不同，见上表）。
  */
 
 export const OPENAI_CHAT_COMPLETIONS_URL =
@@ -32,35 +32,10 @@ export const OPENAI_CHAT_COMPLETIONS_URL =
 
 /** @type {Record<string, OpenAiModelOption>} */
 export const OPENAI_MODELS = {
-  GPT_4_1_MINI: {
-    id: "gpt-4.1-mini",
-    label: "GPT-4.1 mini",
-    note: "默认大批量翻译；费用/限流见文件头表格",
-  },
-  GPT_4O_MINI: {
-    id: "gpt-4o-mini",
-    label: "GPT-4o mini",
-    note: "更便宜；TPM 与 4.1-mini 同档、max output 更小",
-  },
-  GPT_4_1: {
-    id: "gpt-4.1",
-    label: "GPT-4.1",
-    note: "高质量；Tier1 TPM 低于 mini 系",
-  },
-  GPT_4O: {
-    id: "gpt-4o",
-    label: "GPT-4o",
-    note: "旗舰之一；单价与 TPM 见表",
-  },
   GPT_5_4: {
     id: "gpt-5.4",
     label: "GPT-5.4",
     note: "高输出上限；>272K 输入有官方加价规则见模型页",
-  },
-  GPT_5_4_PRO: {
-    id: "gpt-5.4-pro",
-    label: "GPT-5.4 Pro",
-    note: "最贵、Tier1 TPM 与 4o 同量级；部分能力以 Responses API 为主见文档",
   },
   GPT_5_4_MINI: {
     id: "gpt-5.4-mini",
@@ -72,22 +47,22 @@ export const OPENAI_MODELS = {
     label: "GPT-5.4 nano",
     note: "5.4 最便宜；Tier1 TPM 与 4o-mini/4.1-mini 同档",
   },
-  GPT_5_4_SNAPSHOT_2026_03_05: {
-    id: "gpt-5.4-2026-03-05",
-    label: "GPT-5.4（快照 2026-03-05）",
-    note: "与 gpt-5.4 同档计费/限流；锁定行为对比用",
+  GPT_5_4_PRO: {
+    id: "gpt-5.4-pro",
+    label: "GPT-5.4 Pro",
+    note: "最贵、Tier1 TPM 与 4o 同量级；部分能力以 Responses API 为主见文档",
   },
 };
 
 /** 默认用于「数万词级」批量翻译的模型（见上方说明） */
-export const OPENAI_DEFAULT_TRANSLATION_MODEL = OPENAI_MODELS.GPT_4_1_MINI.id;
+export const OPENAI_DEFAULT_TRANSLATION_MODEL = OPENAI_MODELS.GPT_5_4_MINI.id;
 
-/** 与默认翻译模型 `gpt-4.1-mini` 对齐：官方标注 max output tokens = 32768（Chat Completions 的 max_tokens 不得超过该值） */
+/** Chat Completions 的 `max_tokens` 封顶（32768，兼容 4.1 系等）；默认 `gpt-5.4-mini` 时官方允许更高 max output，见上表，可按任务调大本常量 */
 export const OPENAI_MAX_OUTPUT_TOKENS_GPT_4_1_FAMILY = 32768;
 
 export const OPENAI_DEFAULTS = {
   temperature: 0,
-  /** 纯文本翻译：默认用 4.1 系单请求输出上限 */
+  /** 纯文本翻译：单请求输出 token 上限（见 `OPENAI_MAX_OUTPUT_TOKENS_GPT_4_1_FAMILY`） */
   maxOutputTokensText: OPENAI_MAX_OUTPUT_TOKENS_GPT_4_1_FAMILY,
   /** 整段 JSON 等：同样封顶 32768（换模型时请对照各模型文档的 max output） */
   maxOutputTokensJsonChunk: OPENAI_MAX_OUTPUT_TOKENS_GPT_4_1_FAMILY,
